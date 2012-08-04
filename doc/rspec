@@ -487,6 +487,54 @@ Randomized with seed 50341
 
 
 
+lambda{
+  #code 
+}.should change{expression}.by(difference)
+
+lambda{
+  #code 
+}.should change{expression}.from(initial).to(final)
+
+
+
+
+
+
+
+
+it "should create new instance of person" do
+    lambda{
+      Person.create!(@valid_attributes)
+    }.should change{Person.count}.by(1)    
+  end
+  
+  it "should create new instance of person" do
+    lambda{
+      Person.create!(@valid_attributes)
+      Person.create!(@valid_attributes)
+    }.should change{Person.count}.from(1).to(3)    
+  end
+
+
+
+
+
+
+
+pravinmishra@ubuntu:~/workSpace/rails3_and_rspec$ rspec spec/models/person_spec.rb 
+....
+
+Finished in 0.63094 seconds
+4 examples, 0 failures
+
+Randomized with seed 35057
+
+
+
+
+
+
+
 
 
 
