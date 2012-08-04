@@ -19,7 +19,7 @@ describe Person do
     lambda{
       Person.create!(@valid_attributes)
       Person.create!(@valid_attributes)
-    }.should change(Person, :count).from(1).to(2)    
+    }.should change(Person, :count).from(1).to(3)    
   end
   
 end

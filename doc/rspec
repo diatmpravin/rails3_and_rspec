@@ -1,0 +1,492 @@
+pravinmishra@ubuntu:~/workSpace$ cd rails3_and_rspec/
+
+
+
+
+pravinmishra@ubuntu:~/workSpace/rails3_and_rspec$ rails g rspec:model
+Usage:
+  rails generate rspec:model NAME [field:type field:type] [options]
+
+Options:
+  [--skip-namespace]            # Skip namespace (affects only isolated applications)
+  [--old-style-hash]            # Force using old style hash (:foo => 'bar') on Ruby >= 1.9
+  [--fixture]                   # Indicates when to generate fixture
+  [--fixture-replacement=NAME]  # Fixture replacement to be invoked
+
+Runtime options:
+  -f, [--force]    # Overwrite files that already exist
+  -p, [--pretend]  # Run but do not make any changes
+  -q, [--quiet]    # Suppress status output
+  -s, [--skip]     # Skip files that already exist
+
+Description:
+    Create rspec files for model generator.
+
+
+
+
+
+
+
+
+
+pravinmishra@ubuntu:~/workSpace/rails3_and_rspec$ rails g rspec:model Person fname:string lname:string
+      create  spec/models/person_spec.rb
+pravinmishra@ubuntu:~/workSpace/rails3_and_rspec$ 
+
+
+
+
+
+
+
+
+
+pravinmishra@ubuntu:~/workSpace/rails3_and_rspec$ rspec spec
+/home/pravinmishra/workSpace/rails3_and_rspec/spec/models/person_spec.rb:3:in `<top (required)>': uninitialized constant Person (NameError)
+	from /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/configuration.rb:780:in `load'
+	from /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/configuration.rb:780:in `block in load_spec_files'
+	from /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/configuration.rb:780:in `map'
+	from /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/configuration.rb:780:in `load_spec_files'
+	from /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/command_line.rb:22:in `run'
+	from /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/runner.rb:69:in `run'
+	from /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/runner.rb:8:in `block in autorun'
+
+
+
+
+
+
+
+
+
+pravinmishra@ubuntu:~/workSpace/rails3_and_rspec$ rails g model Person fname:string lname:string
+      invoke  active_record
+      create    db/migrate/20120804011008_create_people.rb
+      create    app/models/person.rb
+      invoke    rspec
+    conflict      spec/models/person_spec.rb
+    Overwrite /home/pravinmishra/workSpace/rails3_and_rspec/spec/models/person_spec.rb? (enter "h" for help) [Ynaqdh] y
+       force      spec/models/person_spec.rb
+
+
+
+
+
+
+
+
+
+
+
+
+pravinmishra@ubuntu:~/workSpace/rails3_and_rspec$ rspec spec/models/person_spec.rb 
+*
+Pending:
+  Person add some examples to (or delete) /home/pravinmishra/workSpace/rails3_and_rspec/spec/models/person_spec.rb
+    # No reason given
+    # ./spec/models/person_spec.rb:4
+Finished in 0.00053 seconds
+1 example, 0 failures, 1 pending
+Randomized with seed 23919
+
+
+
+
+
+
+
+
+pravinmishra@ubuntu:~/workSpace/rails3_and_rspec$ rspec spec/models/person_spec.rb 
+No examples found.
+Finished in 0.00014 seconds
+0 examples, 0 failures
+Randomized with seed 64072
+
+
+
+
+
+
+
+
+
+
+before(:each) do
+    @valid_attributes = {
+      fname => "Ankit",
+      lname => "Mishra"
+    }
+  end
+  
+  it "should create new instance of person" do
+    Person.create(@valid_attributes)
+  end
+
+
+
+
+
+
+
+
+
+  
+  
+  pravinmishra@ubuntu:~/workSpace/rails3_and_rspec$ rspec spec/models/person_spec.rb 
+F
+Failures:
+  1) Person should create new instance of person
+     Failure/Error: Unable to find matching line from backtrace
+     Mysql2::Error:
+       Unknown database 'rails3_and_rspec_test'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/mysql2-0.3.11/lib/mysql2/client.rb:44:in `connect'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/mysql2-0.3.11/lib/mysql2/client.rb:44:in `initialize'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/activerecord-3.2.6/lib/active_record/connection_adapters/mysql2_adapter.rb:16:in `new'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/activerecord-3.2.6/lib/active_record/connection_adapters/mysql2_adapter.rb:16:in `mysql2_connection'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/activerecord-3.2.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:309:in `new_connection'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/activerecord-3.2.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:319:in `checkout_new_connection'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/activerecord-3.2.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:241:in `block (2 levels) in checkout'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/activerecord-3.2.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:236:in `loop'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/activerecord-3.2.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:236:in `block in checkout'
+     # /home/pravinmishra/.rvm/rubies/ruby-1.9.2-p318/lib/ruby/1.9.1/monitor.rb:201:in `mon_synchronize'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/activerecord-3.2.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:233:in `checkout'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/activerecord-3.2.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:96:in `block in connection'
+     # /home/pravinmishra/.rvm/rubies/ruby-1.9.2-p318/lib/ruby/1.9.1/monitor.rb:201:in `mon_synchronize'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/activerecord-3.2.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:95:in `connection'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/activerecord-3.2.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:404:in `retrieve_connection'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/activerecord-3.2.6/lib/active_record/connection_adapters/abstract/connection_specification.rb:168:in `retrieve_connection'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/activerecord-3.2.6/lib/active_record/connection_adapters/abstract/connection_specification.rb:142:in `connection'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/activerecord-3.2.6/lib/active_record/fixtures.rb:469:in `create_fixtures'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/activerecord-3.2.6/lib/active_record/fixtures.rb:895:in `load_fixtures'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/activerecord-3.2.6/lib/active_record/fixtures.rb:849:in `setup_fixtures'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-rails-2.11.0/lib/rspec/rails/adapters.rb:17:in `block (2 levels) in setup'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/example.rb:236:in `instance_eval'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/example.rb:236:in `instance_eval'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/hooks.rb:23:in `run'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/hooks.rb:72:in `block in run'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/hooks.rb:72:in `each'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/hooks.rb:72:in `run'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/hooks.rb:424:in `run_hook'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/example_group.rb:323:in `run_before_each_hooks'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/example.rb:299:in `run_before_each'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/example.rb:112:in `block in run'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/example.rb:253:in `with_around_each_hooks'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/example.rb:110:in `run'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/example_group.rb:378:in `block in run_examples'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/example_group.rb:374:in `map'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/example_group.rb:374:in `run_examples'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/example_group.rb:360:in `run'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/command_line.rb:28:in `block (2 levels) in run'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/command_line.rb:28:in `map'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/command_line.rb:28:in `block in run'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/reporter.rb:34:in `report'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/command_line.rb:25:in `run'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/runner.rb:69:in `run'
+     # /home/pravinmishra/.rvm/gems/ruby-1.9.2-p318/gems/rspec-core-2.11.1/lib/rspec/core/runner.rb:8:in `block in autorun'
+
+Finished in 0.44766 seconds
+1 example, 1 failure
+Failed examples:
+rspec ./spec/models/person_spec.rb:12 # Person should create new instance of person
+Randomized with seed 63039
+
+
+
+
+
+
+
+
+pravinmishra@ubuntu:~/workSpace/rails3_and_rspec$ rake db:create
+pravinmishra@ubuntu:~/workSpace/rails3_and_rspec$ rake db:migrate
+==  CreatePeople: migrating ===================================================
+-- create_table(:people)
+   -> 0.3363s
+==  CreatePeople: migrated (0.3365s) ==========================================
+
+
+
+
+
+
+
+
+
+pravinmishra@ubuntu:~/workSpace/rails3_and_rspec$ rspec spec/models/person_spec.rb 
+F
+Failures:
+  1) Person should create new instance of person
+     Failure/Error: fname => "Ankit",
+     NameError:
+       undefined local variable or method `fname' for #<RSpec::Core::ExampleGroup::Nested_1:0x00000003847170>
+     # ./spec/models/person_spec.rb:7:in `block (2 levels) in <top (required)>'
+Finished in 0.01396 seconds
+1 example, 1 failure
+Failed examples:
+rspec ./spec/models/person_spec.rb:12 # Person should create new instance of person
+Randomized with seed 14020
+
+
+
+
+
+
+
+
+
+
+@valid_attributes = {
+      :fname => "Ankit",
+      :lname => "Mishra"
+    }
+    
+
+
+
+
+
+
+
+
+    
+pravinmishra@ubuntu:~/workSpace/rails3_and_rspec$ rspec spec/models/person_spec.rb 
+F
+Failures:
+  1) Person should create new instance of person
+     Failure/Error: Person.create!(@valid_attributes)
+     ActiveRecord::StatementInvalid:
+       Mysql2::Error: Table 'rails3_and_rspec_test.people' doesn't exist: SHOW FULL FIELDS FROM `people`
+     # ./spec/models/person_spec.rb:13:in `block (2 levels) in <top (required)>'
+Finished in 0.03165 seconds
+1 example, 1 failure
+Failed examples:
+rspec ./spec/models/person_spec.rb:12 # Person should create new instance of person
+Randomized with seed 40758
+
+
+
+
+
+
+
+
+ pravinmishra@ubuntu:~/workSpace/rails3_and_rspec$ mysql -u root
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 50
+Server version: 5.5.20-0ubuntu3 (Ubuntu)
+
+Copyright (c) 2000, 2011, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use rails3_and_rspec_test;
+Database changed
+mysql> show tablses;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'tablses' at line 1
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> 
+   
+
+
+
+
+
+
+
+
+
+pravinmishra@ubuntu:~/workSpace/rails3_and_rspec$ rake db:test:prepare
+
+
+
+
+mysql> show tables;
++---------------------------------+
+| Tables_in_rails3_and_rspec_test |
++---------------------------------+
+| people                          |
+| schema_migrations               |
++---------------------------------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+
+
+pravinmishra@ubuntu:~/workSpace/rails3_and_rspec$ rspec spec/models/person_spec.rb 
+.
+
+Finished in 0.19606 seconds
+1 example, 0 failures
+
+Randomized with seed 35469
+
+
+
+
+lambda{
+  #code that causese a change
+}.should change(object, :method).by(difference)
+
+OR
+
+should change(object, :method).from(initial).to(final)
+
+The object typically is a class, if not, be wary of reload!
+
+
+
+it "should create new instance of person" do
+    lambda{
+      Person.create!(@valid_attributes)
+    }.should change(Person, :count).by(1)    
+  end
+  
+  it "should create new instance of person" do
+    lambda{
+      Person.create!(@valid_attributes)
+      Person.create!(@valid_attributes)
+    }.should change(Person, :count).from(1).to(2)    
+  end
+  
+  
+  
+  
+  pravinmishra@ubuntu:~/workSpace/rails3_and_rspec$ rspec spec/models/person_spec.rb 
+.F
+
+Failures:
+
+  1) Person should create new instance of person
+     Failure/Error: lambda{
+       count should have been changed to 1, but is now 2
+     # ./spec/models/person_spec.rb:19:in `block (2 levels) in <top (required)>'
+
+Finished in 0.34189 seconds
+2 examples, 1 failure
+
+Failed examples:
+
+rspec ./spec/models/person_spec.rb:18 # Person should create new instance of person
+
+Randomized with seed 32484
+
+
+
+
+
+
+mysql> insert into people(fname,lname) values('Sanyam', 'Mishra');
+Query OK, 1 row affected, 2 warnings (0.16 sec)
+
+mysql> select * from people;
++----+--------+--------+---------------------+---------------------+
+| id | fname  | lname  | created_at          | updated_at          |
++----+--------+--------+---------------------+---------------------+
+| 14 | Sanyam | Mishra | 0000-00-00 00:00:00 | 0000-00-00 00:00:00 |
++----+--------+--------+---------------------+---------------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+pravinmishra@ubuntu:~/workSpace/rails3_and_rspec$ rspec spec/models/person_spec.rb 
+.F
+
+Failures:
+
+  1) Person should create new instance of person
+     Failure/Error: lambda{
+       count should have initially been 0, but was 1
+     # ./spec/models/person_spec.rb:19:in `block (2 levels) in <top (required)>'
+
+Finished in 0.29442 seconds
+2 examples, 1 failure
+
+Failed examples:
+
+rspec ./spec/models/person_spec.rb:18 # Person should create new instance of person
+
+Randomized with seed 40022
+
+
+
+
+
+it "should create new instance of person" do
+    lambda{
+      Person.create!(@valid_attributes)
+      Person.create!(@valid_attributes)
+    }.should change(Person, :count).from(1).to(2)    
+  end
+
+
+
+
+
+
+
+pravinmishra@ubuntu:~/workSpace/rails3_and_rspec$ rspec spec/models/person_spec.rb 
+.F
+
+Failures:
+
+  1) Person should create new instance of person
+     Failure/Error: lambda{
+       count should have been changed to 2, but is now 3
+     # ./spec/models/person_spec.rb:19:in `block (2 levels) in <top (required)>'
+
+Finished in 0.28678 seconds
+2 examples, 1 failure
+
+Failed examples:
+
+rspec ./spec/models/person_spec.rb:18 # Person should create new instance of person
+
+Randomized with seed 17054
+
+
+
+
+
+it "should create new instance of person" do
+    lambda{
+      Person.create!(@valid_attributes)
+      Person.create!(@valid_attributes)
+    }.should change(Person, :count).from(1).to(3)    
+  end
+
+
+
+
+
+
+
+pravinmishra@ubuntu:~/workSpace/rails3_and_rspec$ rspec spec/models/person_spec.rb 
+..
+
+Finished in 0.36139 seconds
+2 examples, 0 failures
+
+Randomized with seed 50341
+
+
+
+
+
+
+
